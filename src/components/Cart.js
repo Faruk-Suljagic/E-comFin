@@ -15,9 +15,7 @@ function Cart(props) {
         {cartItems.length === 0 ? (
           <span> Cart is empty </span>
         ) : (
-          <p>
-            <span>Cart Quantity ({cartItems.length})</span>
-          </p>
+          <span>Cart Quantity ({cartItems.length})</span>
         )}
       </p>
       {cartItems.map((itm) => {

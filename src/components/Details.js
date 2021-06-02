@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import Axios from "axios";
 import "../css/Details.css";
@@ -7,27 +7,27 @@ import Header from "./Header";
 
 function Details(props) {
   const [fetchProd, setProd] = useState([]);
-  console.log(fetchProd);
+
+  let history = useHistory();
 
   const productId = props.match.params.productId;
-  useEffect(() => {
-    const prodId = productId;
-    Axios.get(`https://fakestoreapi.com/products/${prodId}`)
-      .then((res) => {
-        console.log(res.data);
 
+  useEffect(() => {
+    Axios.get(`https://fakestoreapi.com/products/${productId}`)
+      .then((res) => {
         setProd(res.data);
       })
       .catch((err) => {
         console.log("Err", err);
       });
-  }, []);
+  }, [productId]);
   return (
     <>
       <Header className="magnet" />
-      <Link className="backBtn" to="/">
-        <i class="fas fa-chevron-left"></i> Back
-      </Link>
+
+      <button className="backBtn" onClick={history.goBack}>
+        <i className="fas fa-chevron-left"></i> Back
+      </button>
       <div className="detailContainer">
         <div className="detailWrapper">
           <img width="450px" height="450px" src={fetchProd.image} alt="" />
@@ -40,7 +40,7 @@ function Details(props) {
             <p>{fetchProd.description}</p>
 
             <h5>
-              Price of this Item is: <h3>${fetchProd.price}</h3>
+              Price of this Item is: <strong>${fetchProd.price}</strong>
             </h5>
           </div>
         </div>
